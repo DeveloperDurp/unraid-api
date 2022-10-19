@@ -26,4 +26,4 @@ jobs:
         with:
           push: true # Will only build if this is not here
           tags: |
-            ghcr.io/developerdurp/durpot:latest
+            ghcr.io/developerdurp/unraid-api:latest
