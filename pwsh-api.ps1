@@ -27,13 +27,13 @@ while ($true) {
     # Split request URL to get command and options
     $requestvars = ([String]$request.Url).split("/");        
 
-    # If a request is sent to http:// :8000/wmi
+    # If a request is sent to http:// :8000/unraid
     if ($requestvars[3] -eq "unraid") {
 
         Write-Output "Getting unraid PSU data"
         Invoke-WebRequest https://$uri/login -SessionVariable unraid -Method Post -Body @{username='root';password="$Password"} | Out-Null;
 
-        # Get the class name and server name from the URL and run get-WMIObject
+        #Get PSU Data from unraid
         $result = Invoke-RestMethod https://$uri/plugins/corsairpsu/status.php -WebSession $unraid;
 
         # Convert the returned data to JSON and set the HTTP content type to JSON
