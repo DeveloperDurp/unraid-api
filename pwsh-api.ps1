@@ -1,6 +1,6 @@
 param(
     $password,
-    $Unraid_URI    
+    $uri  
 )
 # Create a listener on port 8000
 $listener = New-Object System.Net.HttpListener
@@ -31,10 +31,10 @@ while ($true) {
     if ($requestvars[3] -eq "unraid") {
 
         Write-Output "Getting unraid PSU data"
-        Invoke-WebRequest https://$Unraid_URI/login -SessionVariable unraid -Method Post -Body @{username='root';password="$Password"} | Out-Null;
+        Invoke-WebRequest https://$uri/login -SessionVariable unraid -Method Post -Body @{username='root';password="$Password"} | Out-Null;
 
         # Get the class name and server name from the URL and run get-WMIObject
-        $result = Invoke-RestMethod https://$Unraid_URI/plugins/corsairpsu/status.php -WebSession $unraid;
+        $result = Invoke-RestMethod https://$uri/plugins/corsairpsu/status.php -WebSession $unraid;
 
         # Convert the returned data to JSON and set the HTTP content type to JSON
         $message = $result | convertto-json; 
